@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadgenerator-home
+  namespace: social-network
+spec:
+  selector:
+    matchLabels:
+      app: loadgenerator-home # has to match .spec.template.metadata.labels
+  replicas: 1 # by default is 1
+  template:
+    metadata:
+      labels:
+        app: loadgenerator-home # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: wrk
+          image: registry.cn-shenzhen.aliyuncs.com/yuxiaoba/sn-loadgenerator:base
+          imagePullPolicy: Always
+          command: ["/root/wrk2/wrk"]
+          args: ["-D", "exp", "-t2", "-c100", "-d300h", "-L", "-s", "/root/wrk2/scripts/social-network/read-home-timeline.lua", "http://testbed.bizseer.com:37777/wrk2-api/home-timeline/read", "-R", "100"]
