@@ -62,7 +62,7 @@ request = function()
   media_types = media_types:sub(1, #media_types - 1) .. "]"
 
   local method = "POST"
-  local path = "http://33.33.33.233:37777/wrk2-api/post/compose"
+  local path = "http://nginx-thrift.social-network.svc.cluster.local:8080/wrk2-api/post/compose"
   local headers = {}
   local body
   headers["Content-Type"] = "application/x-www-form-urlencoded"
